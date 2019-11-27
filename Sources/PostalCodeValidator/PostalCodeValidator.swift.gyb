@@ -40,29 +40,46 @@ public final class PostalCodeValidator {
 % end
     ]
 
-    /// The locale of the validator.
-    public private(set) var locale: Locale
+    /**
+     *  The two-letter ISO 3166-2 region code
+     *  (for example, "US" for the United States of America).
+     */
+    var regionCode: String
+
     private var regularExpression: NSRegularExpression
 
     /**
-     * Creates a postal code validator for the region of the provided locale.
+     * Creates a postal code validator for the specified region.
      *
-     * If the locale doesn't specify a valid region,
-     * or the region isn't supported,
-     * this initializer returns `nil`.
+     * Returns `nil` if the region isn't supported.
+     *
+     * - Parameters:
+     *   - region: A two-letter ISO 3166-2 region code
+     *             (for example, "US" for the United States of America).
+     */
+    public init?(regionCode: String) {
+        guard let pattern = PostalCodeValidator.patternsByRegion[regionCode],
+            let regex = try? NSRegularExpression(pattern: #"\A\#(pattern)\Z"#, options: [])
+        else { return nil }
+
+        self.regionCode = regionCode
+        self.regularExpression = regex
+    }
+
+    /**
+     * Creates a postal code validator for the region of the specified locale.
+     *
+     * Returns `nil` if the locale doesn't have a valid region,
+     * or the region isn't supported.
      *
      * - Parameters:
      *   - locale: The locale whose `regionCode` property is used to determine
      *             the appropriate postal code validation rules.
      */
-    public init?(locale: Locale) {
-        self.locale = locale
-        guard let regionCode = locale.regionCode,
-            let pattern = PostalCodeValidator.patternsByRegion[regionCode],
-            let regex = try? NSRegularExpression(pattern: #"\A\#(pattern)\Z"#, options: [])
-        else { return nil }
+    public convenience init?(locale: Locale) {
+        guard let regionCode = locale.regionCode else { return nil }
 
-        self.regularExpression = regex
+        self.init(regionCode: regionCode)
     }
 
     /**

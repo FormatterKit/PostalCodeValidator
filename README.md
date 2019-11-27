@@ -11,8 +11,7 @@ with support for 200+ regions.
 import Foundation
 import PostalCodeValidator
 
-let locale = Locale.current // American English (en-US)
-if let validator = PostalCodeValidator(locale: locale) {
+if let validator = PostalCodeValidator(locale: .current) { // United States (US)
     validator.validate(postalCode: "95014")) // true
     validator.validate(postalCode: "22162-1010") // true
 
@@ -21,8 +20,7 @@ if let validator = PostalCodeValidator(locale: locale) {
 }
 
 // 248 regions supported
-let 🇯🇵 = Locale(identifier: "ja-JP")
-if let validator = PostalCodeValidator(locale: 🇯🇵) {
+if let validator = PostalCodeValidator(regionCode: "JP") { // Japan (JP)
     validator.validate(postalCode: "154-0023")) // true
     validator.validate(postalCode: "12345") // false
 }
