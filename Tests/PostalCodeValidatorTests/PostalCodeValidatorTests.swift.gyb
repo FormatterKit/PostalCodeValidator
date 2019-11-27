@@ -41,7 +41,7 @@ final class PostalCodeValidatorTests: XCTestCase {
 
         XCTAssertFalse(validator!.validate(postalCode:#"XXXXXXXXXXX"#))
     }
-    
+
         % end
     % end
 % end
