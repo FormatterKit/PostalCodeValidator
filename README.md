@@ -1,7 +1,7 @@
 # PostalCodeValidator
 
 A validator for [postal codes](https://en.wikipedia.org/wiki/Postal_code)
-with support for 248+ regions.
+with support for 200+ regions.
 
 ```swift
 import Foundation
