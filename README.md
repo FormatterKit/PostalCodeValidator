@@ -48,7 +48,7 @@ let package = Package(
   dependencies: [
     .package(
         url: "https://github.com/FormatterKit/PostalCodeValidator",
-        from: "0.0.1"
+        from: "0.1.0"
     ),
   ]
 )
