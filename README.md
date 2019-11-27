@@ -1,5 +1,9 @@
 # PostalCodeValidator
 
+[![Build Status][ci status badge]][ci status]
+[![License][license badge]][license]
+[![Swift Version][swift version badge]][swift version]
+
 A validator for [postal codes](https://en.wikipedia.org/wiki/Postal_code)
 with support for 200+ regions.
 
@@ -35,7 +39,7 @@ Following the guidance of the
 [twitter-cldr-rb](https://github.com/twitter/twitter-cldr-rb/issues/166) project,
 `PostalCodeValidator` sources its information from http://i18napis.appspot.com.
 
-The most recent release of this software uses 
+The most recent release of this software uses
 information retrieved from the website on November 27, 2019.
 
 ## Requirements
@@ -71,3 +75,10 @@ MIT
 ## Contact
 
 Mattt ([@mattt](https://twitter.com/mattt))
+
+[ci status]: https://github.com/FormatterKit/PostalCodeValidator/actions
+[ci status badge]: https://github.com/FormatterKit/PostalCodeValidator/workflows/CI/badge.svg
+[license]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
+[license badge]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
+[swift version]: https://swift.org/download/
+[swift version badge]: http://img.shields.io/badge/swift%20version-4.0+-orange.svg?style=flat
