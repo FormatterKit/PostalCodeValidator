@@ -32,16 +32,6 @@ if let validator = PostalCodeValidator(locale: 🇯🇵) {
 > To validate the postal code for a particular region,
 > you can construct a locale using an identifier with the `"und"` language code.
 
-The CLDR previously maintained a list of postal code formats,
-but that information was
-[deprecated in v27](http://unicode.org/reports/tr35/tr35-info.html#Postal_Code_Validation).
-Following the guidance of the
-[twitter-cldr-rb](https://github.com/twitter/twitter-cldr-rb/issues/166) project,
-`PostalCodeValidator` sources its information from http://i18napis.appspot.com.
-
-The most recent release of this software uses
-information retrieved from the website on November 27, 2019.
-
 ## Requirements
 
 - Swift 4.0+
@@ -67,6 +57,27 @@ let package = Package(
 ```
 
 Then run the `swift build` command to build your project.
+
+## Known Issues
+
+- Armed forces in Germany (and likely other countries)
+  use [special postal codes](https://de.wikipedia.org/wiki/Feldpost_%28Bundeswehr%29),
+  which aren't included in the upstream data source.
+  This will cause validation of these postal codes to fail.
+  so validation will fail for these postal codes.
+  _(Thanks for pointing this out, [@timohetzel](https://twitter.com/timohetzel))_
+
+## Additional Details
+
+The CLDR previously maintained a list of postal code formats,
+but that information was
+[deprecated in v27](http://unicode.org/reports/tr35/tr35-info.html#Postal_Code_Validation).
+
+Following the guidance of the
+[twitter-cldr-rb](https://github.com/twitter/twitter-cldr-rb/issues/166) project,
+`PostalCodeValidator` sources its information from http://i18napis.appspot.com.
+The most recent release of this software uses
+information retrieved from the website on November 27, 2019.
 
 ## License
 
