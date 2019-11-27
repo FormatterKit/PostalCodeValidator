@@ -1,0 +1,51 @@
+% warning = "This file was automatically generated and should not be edited."
+// ${warning}
+import Foundation
+
+%{
+# encoding=utf8
+import os
+import sys
+import json
+reload(sys)
+sys.setdefaultencoding('utf8')
+}%
+% with open(os.getcwd() + "/../../Resources/postalData.json") as file:
+    %{ data = json.load(file) }%
+public final class PostalCodeValidator {
+    public class var isoRegionCodes: Set<String> {
+        return Set(patternsByRegion.keys)
+    }
+
+    private static let patternsByRegion: [String: String] = [
+    % for region in data:
+        % if region:
+            %{
+               try:
+                  code = region['key']
+                  pattern = region['zip']
+               except KeyError:
+                  pass }%
+        "${code}": #"${pattern}"#,
+        % end
+    % end
+% end
+    ]
+
+    public private(set) var locale: Locale
+    private var regularExpression: NSRegularExpression
+
+    public init?(locale: Locale = .autoupdatingCurrent) {
+        self.locale = locale
+        guard let regionCode = locale.regionCode,
+            let pattern = PostalCodeValidator.patternsByRegion[regionCode],
+            let regex = try? NSRegularExpression(pattern: #"\A\#(pattern)\Z"#, options: [])
+        else { return nil }
+
+        self.regularExpression = regex
+    }
+
+    public func validate(postalCode: String) -> Bool {
+        return regularExpression.rangeOfFirstMatch(in: postalCode, options: [], range: NSRange(postalCode.startIndex..<postalCode.endIndex, in: postalCode)).location != NSNotFound
+    }
+}

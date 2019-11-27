@@ -1,0 +1,53 @@
+% warning = "This file was automatically generated and should not be edited."
+// ${warning}
+import Foundation
+@testable import PostalCodeValidator
+import XCTest
+
+%{
+# encoding=utf8
+import os
+import sys
+import json
+reload(sys)
+sys.setdefaultencoding('utf8')
+}%
+%{ testNames = [] }%
+% with open(os.getcwd() + "/../../Resources/postalData.json") as file:
+    %{ data = json.load(file) }%
+final class PostalCodeValidatorTests: XCTestCase {
+    % for region in data:
+        % if region:
+            %{
+               try:
+                  name = region['name']
+                  code = region['key']
+
+                  testName = "testValidate%sPostalCode" % code
+                  testNames.append(testName)
+
+                  examples = []
+                  examples = region['zipex'].split(',')
+               except KeyError:
+                  pass }%
+    func ${testName}() { // ${name}
+        let locale = Locale(identifier: "und-${code}")
+        let validator = PostalCodeValidator(locale: locale)
+        XCTAssertNotNil(validator)
+
+        % for example in examples:
+        XCTAssertTrue(validator!.validate(postalCode: #"${example}"#))
+        % end
+
+        XCTAssertFalse(validator!.validate(postalCode:#"XXXXXXXXXXX"#))
+    }
+    
+        % end
+    % end
+% end
+    static var allTests = [
+% for testName in testNames:
+        ("${testName}", ${testName}),
+% end
+    ]
+}
