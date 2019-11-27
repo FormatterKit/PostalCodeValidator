@@ -1,7 +1,15 @@
 // This file was automatically generated and should not be edited.
 import Foundation
 
+/// A validator for postal codes.
 public final class PostalCodeValidator {
+    /**
+     * A set of available region codes.
+     *
+     * Each element of the returned set is an two-letter
+     * ISO 3166-2 region code
+     * (for example, "US" for the United States of America).
+    */
     public class var isoRegionCodes: Set<String> {
         return Set(patternsByRegion.keys)
     }
@@ -257,10 +265,22 @@ public final class PostalCodeValidator {
         "ZW": #"\d{5}"#,
     ]
 
+    /// The locale of the validator.
     public private(set) var locale: Locale
     private var regularExpression: NSRegularExpression
 
-    public init?(locale: Locale = .autoupdatingCurrent) {
+    /**
+     * Creates a postal code validator for the region of the provided locale.
+     *
+     * If the locale doesn't specify a valid region,
+     * or the region isn't supported,
+     * this initializer returns `nil`.
+     *
+     * - Parameters:
+     *   - locale: The locale whose `regionCode` property is used to determine
+     *             the appropriate postal code validation rules.
+     */
+    public init?(locale: Locale = .current) {
         self.locale = locale
         guard let regionCode = locale.regionCode,
             let pattern = PostalCodeValidator.patternsByRegion[regionCode],
@@ -270,6 +290,13 @@ public final class PostalCodeValidator {
         self.regularExpression = regex
     }
 
+    /**
+     * Returns whether a postal code is valid for the configured region.
+     *
+     * - Parameters:
+     *   - postalCode: The postal code.
+     * - Returns: `true` if valid, otherwise `false`.
+     */
     public func validate(postalCode: String) -> Bool {
         return regularExpression.rangeOfFirstMatch(in: postalCode, options: [], range: NSRange(postalCode.startIndex..<postalCode.endIndex, in: postalCode)).location != NSNotFound
     }
