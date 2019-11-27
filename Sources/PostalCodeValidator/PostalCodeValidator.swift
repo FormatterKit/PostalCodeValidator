@@ -280,7 +280,7 @@ public final class PostalCodeValidator {
      *   - locale: The locale whose `regionCode` property is used to determine
      *             the appropriate postal code validation rules.
      */
-    public init?(locale: Locale = .current) {
+    public init?(locale: Locale) {
         self.locale = locale
         guard let regionCode = locale.regionCode,
             let pattern = PostalCodeValidator.patternsByRegion[regionCode],
