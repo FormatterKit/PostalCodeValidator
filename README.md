@@ -62,7 +62,6 @@ Then run the `swift build` command to build your project.
   use [special postal codes](https://de.wikipedia.org/wiki/Feldpost_%28Bundeswehr%29),
   which aren't included in the upstream data source.
   This will cause validation of these postal codes to fail.
-  so validation will fail for these postal codes.
   _(Thanks for pointing this out, [@timohetzel](https://twitter.com/timohetzel))_
 
 ## Additional Details
