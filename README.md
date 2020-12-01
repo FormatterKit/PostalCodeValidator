@@ -12,16 +12,16 @@ import Foundation
 import PostalCodeValidator
 
 if let validator = PostalCodeValidator(locale: .current) { // United States (US)
-    validator.validate(postalCode: "95014")) // true
+    validator.validate(postalCode: "95014") // true
     validator.validate(postalCode: "22162-1010") // true
 
-    validator.validate(postalCode: "1234567")) // false
-    validator.validate(postalCode: "INVALID")) // false
+    validator.validate(postalCode: "1234567") // false
+    validator.validate(postalCode: "INVALID") // false
 }
 
 // 248 regions supported
 if let validator = PostalCodeValidator(regionCode: "JP") { // Japan (JP)
-    validator.validate(postalCode: "154-0023")) // true
+    validator.validate(postalCode: "154-0023") // true
     validator.validate(postalCode: "12345") // false
 }
 ```
